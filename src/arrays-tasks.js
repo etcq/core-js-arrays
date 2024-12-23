@@ -380,11 +380,7 @@ function generateOdds(len) {
  *   getElementByIndices([[[ 1, 2, 3]]], [ 0, 0, 1 ]) => 2        (arr[0][0][1])
  */
 function getElementByIndices(arr, indices) {
-  let result = arr;
-  indices.map((n) => {
-    result = result[n];
-    return '';
-  });
+  return indices.reduce((acc, val) => acc[val], arr);
 }
 
 /**
@@ -421,8 +417,12 @@ function getFalsyValuesCount(arr) {
  *                              [0,0,0,1,0],
  *                              [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const matrix = Array(n)
+    .fill(0)
+    .map(() => Array(n).fill(0));
+  matrix.map((x, i) => x.splice(i, 1, 1));
+  return matrix;
 }
 
 /**
@@ -452,8 +452,14 @@ function getIndicesOfOddNumbers(numbers) {
  *    getHexRGBValues([ 0, 255, 16777215]) => [ '#000000', '#0000FF', '#FFFFFF' ]
  *    getHexRGBValues([]) => []
  */
-function getHexRGBValues(/* arr */) {
-  throw new Error('Not implemented');
+function getHexRGBValues(arr) {
+  return arr.map((i) => {
+    const hex = i.toString(16);
+    if (hex.length < 6) {
+      return `#${'0'.repeat(6 - hex.length)}${hex.toUpperCase()}`;
+    }
+    return `#${hex.toUpperCase()}`;
+  });
 }
 
 /**
